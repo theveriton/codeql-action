@@ -591,6 +591,13 @@ export async function getCodeQLForCmd(
         "-Dmaven.wagon.http.pool=false",
       ].join(" ");
 
+      // Activate deptrace for Linux autobuilds for the cpp language
+      // The tracer will intercept missing files and try to install apt packages
+      // containing them
+      if (process.platform === "linux" && language === Language.cpp) {
+        process.env["CODEQL_DEPTRACE_ENABLED"] = "1";
+      }
+
       // On macOS, System Integrity Protection (SIP) typically interferes with
       // CodeQL build tracing of protected binaries.
       // The usual workaround is to prefix `$CODEQL_RUNNER` to build commands:
