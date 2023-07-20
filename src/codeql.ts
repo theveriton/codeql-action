@@ -530,7 +530,6 @@ export async function getCodeQLForCmd(
       if (config.languages.filter((l) => isTracedLanguage(l)).length > 0) {
         extraArgs.push("--begin-tracing");
         extraArgs.push(...(await getTrapCachingExtractorConfigArgs(config)));
-        extraArgs.push(`--trace-process-name=${processName}`);
         if (
           // There's a bug in Lua tracing for Go on Windows in versions earlier than
           // `CODEQL_VERSION_LUA_TRACING_GO_WINDOWS_FIXED`, so don't use Lua tracing
